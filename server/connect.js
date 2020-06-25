@@ -1,4 +1,7 @@
+// It creates a connection with MongoDB database
 const mongoose = require("mongoose");
+
+// It contains local development configurations [App Secrets]
 const config = require("./../app.config");
 
 const mongooseOptions = {
@@ -6,7 +9,8 @@ const mongooseOptions = {
   useUnifiedTopology: true,
 };
 
-mongoose.connect(process.env.MONGO_DATASOURCE || config.MONGO_DATASOURCE,
+mongoose.connect(
+  process.env.MONGO_DATASOURCE || config.MONGO_DATASOURCE,
   mongooseOptions
 );
 
@@ -17,3 +21,5 @@ db.once("open", () => {
 }).on("error", (err) => {
   console.log("Some error occured \n", err);
 });
+
+module.exports = db;
