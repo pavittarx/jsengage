@@ -9,7 +9,7 @@
     "react-scripts": "3.4.1"
   },
   "scripts": {
-    "start": "npm run build && (cd server && npm run start)",
+    "start": "cd server && npm run start",
     "start-react": "react-scripts start",
     "build": "react-scripts build && (cd server && npm run build)",
     "test": "react-scripts test",
