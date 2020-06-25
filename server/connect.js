@@ -2,7 +2,7 @@
 const mongoose = require("mongoose");
 
 // It contains local development configurations [App Secrets]
-const config = require("./../app.config");
+const config = require("./app.config");
 
 const mongooseOptions = {
   useNewUrlParser: true,
