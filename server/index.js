@@ -1,14 +1,12 @@
 const express = require("express");
+const path = require("path");
 
 const app = express();
-const mongoose = require("./connect");
 const compression = require("compression");
 
-app.use(compression()).use(express.urlencoded({extended: true}));
-
-app.get("/", (req, res) => {
-  res.send("Hello World!!");
-});
+app.use(compression()).use(express.urlencoded({ extended: true }));
+// Binds React App with Express Server
+app.use(express.static(path.join(__dirname, "..", "build")));
 
 const authRouter = require("./routes/authentication");
 app.use("/api", authRouter);
