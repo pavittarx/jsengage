@@ -1,8 +1,6 @@
 // It creates a connection with MongoDB database
 const mongoose = require("mongoose");
-
-// It contains local development configurations [App Secrets]
-const config = require("./app.config");
+const config = require("dotenv").config();
 
 const mongooseOptions = {
   useNewUrlParser: true,
