@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("./../connect");
 
 const facilitiesSchema = new mongoose.Schema({
   type: String,

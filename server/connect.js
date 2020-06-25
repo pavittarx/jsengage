@@ -20,4 +20,4 @@ db.once("open", () => {
   console.log("Some error occured \n", err);
 });
 
-module.exports = db;
+module.exports = mongoose;
