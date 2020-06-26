@@ -3,6 +3,7 @@ import axios from "axios";
 import moment from "moment";
 
 import Button from "@material-ui/core/Button";
+import { Alert } from "@material-ui/lab";
 import { TextField, MenuItem } from "@material-ui/core";
 import styles from "./../styles/bookings.module.scss";
 
@@ -27,15 +28,22 @@ function ListFacilities(value, index) {
 }
 
 function BookingsSelection({ facilities }) {
-  const [type, setType] = useState("");
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
+  const dateNow = moment().format("YYYY-MM-DD");
 
-  console.log(type, date, time);
+  const [type, setType] = useState("");
+  const [date, setDate] = useState(dateNow);
+
+  const [err, setErr] = useState();
+  const [message, setMessage] = useState();
+
+  console.log(type);
   return (
     <div className={styles.container}>
+      {err && <Alert severity="error"> {err} </Alert>}
+      {message && <Alert severity="error"> {message} </Alert>}
       <TextField
         select
+        required
         color="primary"
         label="Service Type"
         value={type}
@@ -50,30 +58,52 @@ function BookingsSelection({ facilities }) {
       <TextField
         type="date"
         color="primary"
-        defaultValue={moment().format("YYYY-MM-DD")}
+        required
+        defaultValue={dateNow}
         onChange={(e) => {
           setDate(e.target.value);
         }}
         className={styles.datepicker}
       />
-      <TextField
-        type="time"
-        color="primary"
-        defaultValue={moment().format("HH:00")}
-        className={styles.timepicker}
-        onChange={(e) => {
-          setTime(e.target.value);
-        }}
-        inputProps={{
-          step: 3600,
-        }}
-      />
 
-      <Button variant="contained" color="primary" className={styles.button}>
-        Book
+      <Button
+        variant="contained"
+        color="primary"
+        className={styles.button}
+        onClick={() => {
+          checkSlots({ type, date }, setErr, setMessage);
+        }}
+      >
+        Check Slots
       </Button>
     </div>
   );
+}
+
+function checkSlots(params, err, msg) {
+  err(""); 
+  msg("");
+
+  if(!params.type || !params.date){
+    err("Please provide both Service Type & Date.");
+  }
+
+  const today = moment().startOf("day").unix();
+  const date = moment(params.date).unix();
+
+  if(date < today){
+    err("The date must be current or a future date.");
+    return;
+  }
+
+  axios
+    .post("/api/bookings/slots", params)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 export default () => {
