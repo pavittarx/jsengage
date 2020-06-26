@@ -15,7 +15,7 @@ export default () => {
       <Link to="/"> Home </Link>
       <Link to="/signup"> Signup </Link>
       <Link to="/login"> Login </Link>
-      <Link to="/booking"> Booking </Link>
+      <Link to="/bookings"> Booking </Link>
       </nav>
 
       <Switch>        
@@ -25,7 +25,7 @@ export default () => {
         <Route path="/login">
           <Login />
         </Route>
-        <Route path="/booking">
+        <Route path="/bookings">
           <Booking />
         </Route>
         <Route path="/">
