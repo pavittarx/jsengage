@@ -1,0 +1,28 @@
+.maincontainer {
+  padding: 10px;
+  margin-bottom: 10px;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  .container {
+    min-width: 500px;
+    padding: 10px;
+    display: flex;
+
+    .text {
+      flex: 1;
+      color: #222222;
+    }
+
+    .button {
+      color: #fff;
+    }
+  }
+
+  .datepicker {
+    text-align: center;
+    margin: 0 auto;
+  }
+}

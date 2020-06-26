@@ -18,8 +18,6 @@
      / middlewares 
      / routes   
      - index.js (starting point)
-
-
 ```
 
 `database` - maintains connection and provides interfaces to the database. 
