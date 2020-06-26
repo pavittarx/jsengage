@@ -55,7 +55,9 @@ router.post("/login", async (req, res) => {
     user.password
   );
 
-  res.send(token);
+  // Sets the JWTToken as Cookie used for Authentication on /api routes
+  res.cookie("token", token, { path: "/api", httpOnly: true });
+  res.send("Login Success");
 });
 
 module.exports = router;
