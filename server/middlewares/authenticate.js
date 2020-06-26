@@ -29,8 +29,9 @@ module.exports = async (req, res, next) => {
         return;
     }
 
-    console.log(user);
+    // console.log(user);
     next();
+    return;
   }
   next();
 };

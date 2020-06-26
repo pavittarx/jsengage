@@ -9,8 +9,9 @@ const facilitiesList = [
 ];
 
 router.get("/bookings", (req, res) => {
-  console.log("Inside Bookings");
+  console.log("Inside Bookings" );
   res.send(facilitiesList);
+  return;
 });
 
 module.exports = router;

@@ -4,10 +4,9 @@ import moment from "moment";
 
 import Button from "@material-ui/core/Button";
 import { TextField, MenuItem } from "@material-ui/core";
-
 import styles from "./../styles/bookings.module.scss";
 
-function setBookings(facilities) {
+function getServiceList(facilities) {
   axios
     .get("/api/bookings")
     .then((res) => {
@@ -82,7 +81,7 @@ export default () => {
 
   // Runs only on Intial Render
   useEffect(() => {
-    setBookings(setFacilities);
+    getServiceList(setFacilities);
   }, []);
 
   return (

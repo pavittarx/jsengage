@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, "..", "build")));
 app.use("/api", authRouter).use("/api", bookingsRouter);
 
 app.get("*", (req, res)=>{
-  res.redirect("/");
+  if(req.url !="/") res.redirect("/");
   return;
 })
 
