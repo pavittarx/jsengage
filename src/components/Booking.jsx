@@ -86,6 +86,7 @@ function checkSlots(params, err, msg) {
 
   if(!params.type || !params.date){
     err("Please provide both Service Type & Date.");
+    return;
   }
 
   const today = moment().startOf("day").unix();

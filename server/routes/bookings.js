@@ -15,6 +15,7 @@ router.post("/bookings/slots", async (req, res) => {
 
   if (!params.type || !params.date) {
     res.status(422).send("Please provide both Type & Date of the Service");
+    return;
   }
 
   // Booking Starts at 6Am & ends at 7PM
