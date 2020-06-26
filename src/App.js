@@ -4,16 +4,19 @@ import { TextField, Button } from "@material-ui/core/";
 import { Alert } from "@material-ui/lab";
 
 async function handleSignup(params, err, msg) {
-  console.log(params);
+  // Clears up previous error messages
+  err("");
+  msg("");
 
   axios
-    .post("https://jsengage.herokuapp.com/api/signup", params)
+    .post("/api/signup", params)
     .then((res) => {
       console.log(res);
       msg("Signup Success");
-    }).catch(error=>{
-      console.log(error);
-      err(error.message);
+    })
+    .catch((error) => {
+      console.log(error.response, error.message);
+      err(error.response.data);
     });
 }
 

@@ -20,7 +20,7 @@ router.post("/signup", async (req, res) => {
       .end();
   }
 
-  // Generates has for the password
+  // Generates hash for the password
   const passHash = await bcrypt.hash(userParams.password, 10);
   userParams.password = passHash;
   let user = new User(userParams);

@@ -8,6 +8,7 @@ const compression = require("compression");
 app
   .use(compression())
   .use(express.urlencoded({ extended: true }))
+  .use(express.json())
   .use(cors());
 // Binds React App with Express Server
 app.use(express.static(path.join(__dirname, "..", "build")));
