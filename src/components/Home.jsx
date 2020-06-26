@@ -11,14 +11,12 @@ export default () => {
       <div className={styles.links_container}>
         <Link className={styles.links} to="/login">
           <Button variant="contained" color="primary">
-            {" "}
-            Login{" "}
+            Login
           </Button>
         </Link>
         <Link className={styles.links} to="/bookings">
           <Button variant="contained" color="primary">
-            {" "}
-            Bookings Dashboard{" "}
+            Bookings Dashboard
           </Button>
         </Link>
       </div>
