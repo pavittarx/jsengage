@@ -4,6 +4,8 @@ import { TextField, Button } from "@material-ui/core/";
 import { Alert } from "@material-ui/lab";
 import axios from "axios";
 
+import styles from "./../styles/login.module.scss";
+
 function handleLogin(params, err, msg) {
   // Clear previous error messages
   err("");
@@ -29,8 +31,7 @@ export default () => {
   const [message, setMessage] = useState("");
 
   return (
-    <>
-      <form>
+    <div className={styles.form_container}>
         {err && <Alert severity="error"> {err} </Alert>}
         {message && <Alert severity="success"> {message} </Alert>}
         <TextField
@@ -59,9 +60,8 @@ export default () => {
           color="primary"
           onClick={() => handleLogin({ email, password }, setErr, setMessage)}
         >
-          Login{" "}
+          Login
         </Button>
-      </form>
-    </>
+    </div>
   );
 };

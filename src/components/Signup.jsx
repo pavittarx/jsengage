@@ -3,6 +3,8 @@ import { TextField, Button } from "@material-ui/core/";
 import { Alert } from "@material-ui/lab";
 import axios from "axios";
 
+import styles from "./../styles/signup.module.scss";
+
 async function handleSignup(params, err, msg) {
   // Clears up previous error messages
   err("");
@@ -29,8 +31,7 @@ export default () => {
   const [message, setMessage] = useState("");
 
   return (
-    <>
-      <form>
+    <div class={styles.form_container}>
         {err && <Alert severity="error"> {err} </Alert>}
         {message && <Alert severity="success"> {message} </Alert>}
         <TextField
@@ -71,7 +72,6 @@ export default () => {
         >
           Submit
         </Button>
-      </form>
-    </>
+    </div>
   );
 };
