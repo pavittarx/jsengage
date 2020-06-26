@@ -6,7 +6,7 @@ const cors = require("cors");
 const compression = require("compression");
 
 const { logger, auth } = require("./middlewares/index");
-
+const { authRouter, bookingsRouter } = require("./routes/index");
 
 // Express Configuration Middlewares
 app
@@ -21,8 +21,7 @@ app.use(logger).use("/api/:route", auth);
 // Binds React App with Express Server
 app.use(express.static(path.join(__dirname, "..", "build")));
 
-// Router Configuration
-const authRouter = require("./routes/authentication");
-app.use("/api", authRouter);
+// Router Configuration (/api routes)
+app.use("/api", authRouter).use("/api", bookingsRouter);
 
 app.listen(process.env.PORT || 3000);
