@@ -24,4 +24,9 @@ app.use(express.static(path.join(__dirname, "..", "build")));
 // Router Configuration (/api routes)
 app.use("/api", authRouter).use("/api", bookingsRouter);
 
+app.get("*", (req, res)=>{
+  res.redirect("/");
+  return;
+})
+
 app.listen(process.env.PORT || 3000);
