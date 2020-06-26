@@ -3,7 +3,7 @@ import axios from "axios";
 import moment from "moment";
 
 import Button from "@material-ui/core/Button";
-import { TextField } from "@material-ui/core";
+import { TextField, MenuItem } from "@material-ui/core";
 
 import styles from "./../styles/bookings.module.scss";
 
@@ -21,48 +21,76 @@ function setBookings(facilities) {
     });
 }
 
-function BookingTimer(show) {
-  console.log(moment());
+function ListFacilities(value, index) {
   return (
-    <TextField
-      type="datetime-local"
-      defaultValue={moment().format("YYYY-MM-DDTHH:MM")}
-      inputProps={{
-        step: 3600,
-      }}
-    ></TextField>
+    <MenuItem key={"k-" + index} value={index}>
+      {value}
+    </MenuItem>
   );
 }
 
-function BookingsList(facility, index) {
+function BookingsSelection({ facilities }) {
+  const [type, setType] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+
+  console.log(type, date, time);
   return (
-    <div key={index} className={styles.maincontainer}>
-      <div className={styles.container}>
-        <span className={styles.text}>{facility}</span>
-        <Button className={styles.button} variant="contained" color="primary">
-          Book
-        </Button>
-      </div>
-      <BookingTimer className={styles.datepicker} />
+    <div className={styles.container}>
+      <TextField
+        select
+        color="primary"
+        label="Service Type"
+        value={type}
+        onChange={(e) => {
+          setType(e.target.value);
+        }}
+        className={styles.selection}
+      >
+        {facilities.map((f, i) => ListFacilities(f, i))}
+      </TextField>
+
+      <TextField
+        type="date"
+        color="primary"
+        defaultValue={moment().format("YYYY-MM-DD")}
+        onChange={(e) => {
+          setDate(e.target.value);
+        }}
+        className={styles.datepicker}
+      />
+      <TextField
+        type="time"
+        color="primary"
+        defaultValue={moment().format("HH:00")}
+        className={styles.timepicker}
+        onChange={(e) => {
+          setTime(e.target.value);
+        }}
+        inputProps={{
+          step: 3600,
+        }}
+      />
+
+      <Button variant="contained" color="primary" className={styles.button}>
+        Book
+      </Button>
     </div>
   );
 }
 
 export default () => {
   const [facilities, setFacilities] = useState([]);
-  const [bookTime, setBookingTime] = useState("");
 
   // Runs only on Intial Render
   useEffect(() => {
     setBookings(setFacilities);
   }, []);
 
-  const fList = facilities.map((f, i) => BookingsList(f, i));
-
   return (
     <>
       {!facilities.length && "You must log in."}
-      {facilities && <div> {fList} </div>}
+      {facilities && <BookingsSelection facilities={facilities} />}
     </>
   );
 };
