@@ -16,7 +16,7 @@ app
   .use(cors());
 
 // Project Specific Middlewares
-app.use(logger).use("/api/:route", auth);
+  app.use(logger).use("/api/:route", auth);
 
 // Binds React App with Express Server
 app.use(express.static(path.join(__dirname, "..", "build")));
@@ -24,9 +24,9 @@ app.use(express.static(path.join(__dirname, "..", "build")));
 // Router Configuration (/api routes)
 app.use("/api", authRouter).use("/api", bookingsRouter);
 
-app.get("*", (req, res)=>{
-  if(req.url !="/") res.redirect("/");
+app.get("*", (req, res) => {
+  if (req.url != "/") res.redirect("/");
   return;
-})
+});
 
 app.listen(process.env.PORT || 3000);
