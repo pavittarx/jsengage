@@ -1,68 +1,64 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# @jsnegage 
 
-## Available Scripts
+## Directory Structure
 
-In the project directory, you can run:
+#### Overview
 
-### `npm start`
+```
+  / public (public assets for react-frontend)
+  / server (express server code)
+  / src    (react specific files)
+  - package.json (for react only)
+```
+#### Server Directory
+ 
+```
+  +/ server
+     / database
+     / middlewares 
+     / routes   
+     - index.js (starting point)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+```
 
-### `npm test`
+`database` - maintains connection and provides interfaces to the database. 
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+`middlewares` - It contains project specific middlewares.
 
-### `npm run build`
+`routes` - It contains the `/api` routes, i.e.,the backend logic for the server.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Each of these folders expose these features as a module, via its own `index.js`. Hence, it is also possible to export each of these as a separate npm module with ease. 
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+[@pavittarx](https://github.com/pavittarx)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+----
 
-### `npm run eject`
+## Text of the problem
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+**Facility Booking:**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* An Apartment Complex has a lot of facilities for its residents to use. Some of them include Tennis Court, Swimming Pool, Badminton Court, Gym, Club House and Cycle tracks. These facilities are free and available to all the residents.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+* Apartment Society requires a web portal where the residents can book to access those facilities.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+**Booking process is simple.**
 
-## Learn More
+  * A resident will login to the web portal and select the facility. 
+  * A Resident can choose the date and time range. For example 1st Jan 2019, 10 AM to 11 AM.
+  * If the slot is available, resident booking gets confirmed. 
+  * If the slot is not available, i.e., if it’s already booked by another resident, it will return an error. Residents can choose to book a different slot.
+  * Residents can see the following once they login into the portal.,
+    * List of available facilities
+    * Book a facility
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**Expected Outcome:**
+* A login page for residents to access the portal.
+* A dashboard for residents (features listed in the previous section).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**Technical requirements:**
 
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+* React should be used for frontend. (usage of Redux is a bonus)
+* Node and Express JS should be used for the APIs. (adding unit tests is a bonus)
+* MongoDB with Mongoose ORM.
+* Deploy this application in heroku or any public cloud. (docker image is a bonus)
