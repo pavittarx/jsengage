@@ -1,0 +1,29 @@
+body{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Roboto, Helvetica, sans-serif;
+}
+
+h1{
+  font-size: 50px;
+  text-align: center;
+  color: #222222;
+}
+
+a{
+  text-decoration: none;
+}
+
+a:hover{
+  color: #222222;
+}
+
+nav{
+  padding: 20px;
+
+  a{
+    padding: 10px;
+
+  }
+}
