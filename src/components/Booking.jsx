@@ -8,7 +8,6 @@ import { TextField, MenuItem } from "@material-ui/core";
 import styles from "./../styles/bookings.module.scss";
 
 function setBookings(facilities) {
-  console.log("running setLogin()");
 
   axios
     .get("/api/bookings")
@@ -89,8 +88,9 @@ export default () => {
 
   return (
     <>
+      { /* facilities is an array, so it needs to checked for emptiness */}
       {!facilities.length && "You must log in."}
-      {facilities && <BookingsSelection facilities={facilities} />}
+      {facilities.length? <BookingsSelection facilities={facilities} />: null}
     </>
   );
 };
