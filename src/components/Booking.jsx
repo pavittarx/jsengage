@@ -1,23 +1,17 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import moment from "moment";
 
 import Button from "@material-ui/core/Button";
 import { Alert } from "@material-ui/lab";
 import { TextField, MenuItem } from "@material-ui/core";
 import styles from "./../styles/bookings.module.scss";
 
-function getServiceList(facilities) {
-  axios
-    .get("/api/bookings")
-    .then((res) => {
-      console.log(res);
-      facilities(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
+import moment from "moment";
+import {
+  getSlots,
+  getServiceList,
+  getStartEndTimings,
+  generateSlots,
+} from "./../libs/bookings";
 
 function ListFacilities(value, index) {
   return (
@@ -34,77 +28,74 @@ function BookingsSelection({ facilities }) {
   const [date, setDate] = useState(dateNow);
 
   const [err, setErr] = useState();
-  const [message, setMessage] = useState();
+  const [filledSlots, setFilledSlots] = useState();
 
-  console.log(type);
   return (
-    <div className={styles.container}>
-      {err && <Alert severity="error"> {err} </Alert>}
-      {message && <Alert severity="error"> {message} </Alert>}
-      <TextField
-        select
-        required
-        color="primary"
-        label="Service Type"
-        value={type}
-        onChange={(e) => {
-          setType(e.target.value);
-        }}
-        className={styles.selection}
-      >
-        {facilities.map((f, i) => ListFacilities(f, i))}
-      </TextField>
+    <>
+      <div className={styles.container}>
+        {err && <Alert severity="error"> {err} </Alert>}
+        <TextField
+          select
+          required
+          color="primary"
+          label="Service Type"
+          value={type}
+          onChange={(e) => {
+            setType(e.target.value);
+          }}
+          className={styles.selection}
+        >
+          {facilities.map((f, i) => ListFacilities(f, i))}
+        </TextField>
 
-      <TextField
-        type="date"
-        color="primary"
-        required
-        defaultValue={dateNow}
-        onChange={(e) => {
-          setDate(e.target.value);
-        }}
-        className={styles.datepicker}
-      />
+        <TextField
+          type="date"
+          color="primary"
+          required
+          defaultValue={dateNow}
+          onChange={(e) => {
+            setDate(e.target.value);
+          }}
+          className={styles.datepicker}
+        />
 
-      <Button
-        variant="contained"
-        color="primary"
-        className={styles.button}
-        onClick={() => {
-          checkSlots({ type, date }, setErr, setMessage);
-        }}
-      >
-        Check Slots
-      </Button>
-    </div>
+        <Button
+          variant="contained"
+          color="primary"
+          className={styles.button}
+          onClick={() => {
+            getSlots({ type, date }, setErr, setFilledSlots);
+          }}
+        >
+          Check Slots
+        </Button>
+      </div>
+      <ListSlots slots={filledSlots} date={date} />
+    </>
   );
 }
 
-function checkSlots(params, err, msg) {
-  err(""); 
-  msg("");
+function ListSlots({ slots, date }) {
+  const timings = getStartEndTimings(date, { start: 7, end: 21 });
+  console.log(timings);
+  const freeSlots = slots ? generateSlots(timings, slots) : null;
 
-  if(!params.type || !params.date){
-    err("Please provide both Service Type & Date.");
-    return;
-  }
-
-  const today = moment().startOf("day").unix();
-  const date = moment(params.date).unix();
-
-  if(date < today){
-    err("The date must be current or a future date.");
-    return;
-  }
-
-  axios
-    .post("/api/bookings/slots", params)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  return (
+    <>
+      {freeSlots && (
+        <div className={styles.slots_container}>
+          {" "}
+          {freeSlots.map((slot, index) => {
+            return (
+              <Button key={"slot-"+index} variant="contained" color="secondary">
+                {moment(slot).format("hh:mm a")}
+              </Button>
+            );
+          })}
+        </div>
+      )}
+    </>
+  );
 }
 
 export default () => {
