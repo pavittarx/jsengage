@@ -60,3 +60,9 @@ Each of these folders expose these features as a module, via its own `index.js`.
 * Node and Express JS should be used for the APIs. (adding unit tests is a bonus)
 * MongoDB with Mongoose ORM.
 * Deploy this application in heroku or any public cloud. (docker image is a bonus)
+
+----
+
+## Assumptions
+* The Bookings take place between 7 AM to 9 PM. 
+* Each booking slot is an hour long.
