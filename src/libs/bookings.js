@@ -6,7 +6,6 @@ export function getServiceList(facilities) {
   axios
     .get("/api/bookings")
     .then((res) => {
-      console.log(res);
       facilities(res.data);
     })
     .catch((err) => {
@@ -15,26 +14,25 @@ export function getServiceList(facilities) {
 }
 
 // start and end in 24h formats
-export function getStartEndTimings(date, {start, end}){
+export function getStartEndTimings(date, { start, end }) {
   return {
-    start: moment(date).valueOf() + (start*3600000),
-    end: moment(date).valueOf() + (end*3600000)
-  }
+    start: moment(date).valueOf() + start * 3600000,
+    end: moment(date).valueOf() + end * 3600000,
+  };
 }
 
-export function generateSlots({start, end}, restrictions){
+export function generateSlots({ start, end }, restrictions) {
   const difference = 3600000; // 1h difference
   const slots = [];
-  
-  for(let i=start; i<end; i+=difference){
-    console.log(i);
-    if(!restrictions.includes(i)) slots.push(i);
+
+  for (let i = start; i < end; i += difference) {
+    if (!restrictions.includes(i)) slots.push(i);
   }
-  
+
   return slots;
 }
 
-export function getSlots(params, err, slots){
+export function getSlots(params, err, slots) {
   err("");
   slots("");
 
@@ -54,7 +52,6 @@ export function getSlots(params, err, slots){
   axios
     .post("/api/bookings/slots", params)
     .then((res) => {
-      console.log(res);
       slots(res.data);
     })
     .catch((error) => {
@@ -62,9 +59,21 @@ export function getSlots(params, err, slots){
     });
 }
 
-export default {
-  getSlots,
-  getServiceList,
-  generateSlots,
-  getStartEndTimings
+export function bookSlot({ type, slot }, err, message) {
+  err("");
+  message("");
+
+  if (!type || !slot) {
+    err("Please provide both type & slot timings.");
+    return;
+  }
+
+  axios
+    .post("api/bookings/book", { type, slot })
+    .then((res) => {
+      message(res.data);
+    })
+    .catch((error) => {
+      error.response ? err(error.response.data) : console.log(error);
+    });
 }
